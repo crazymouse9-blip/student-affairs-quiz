@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>認識學務處</title>
+<style>
+:root{
+  --ink:#162033;--card:#fff;--blue:#2563eb;--green:#16a34a;
+  --red:#dc2626;--muted:#64748b;--line:#dbe3ef
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;
+  background:linear-gradient(180deg,#eaf2ff,#f7fafc);
+  color:var(--ink)
+}
+header{
+  position:sticky;top:0;z-index:5;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line)
+}
+.top{
+  max-width:900px;margin:auto;padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px
+}
+.brand{font-weight:900}
+.badge{
+  background:#e0ecff;color:#1d4ed8;border:1px solid #bfdbfe;
+  border-radius:999px;padding:6px 10px;font-weight:700;font-size:13px
+}
+.wrap{max-width:900px;margin:auto;padding:16px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 12px 35px rgba(31,41,55,.08);
+  padding:20px;margin:14px 0
+}
+h1{font-size:clamp(28px,7vw,44px);margin:8px 0 12px}
+h2{font-size:clamp(21px,5vw,30px);line-height:1.65;margin:16px 0}
+.notice{
+  background:#f8fafc;border:1px dashed #cbd5e1;
+  border-radius:16px;padding:12px;line-height:1.8
+}
+.sub{color:var(--muted);line-height:1.8}
+.progress-track{
+  height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin:16px 0 8px
+}
+.progress-bar{
+  height:100%;background:linear-gradient(90deg,#2563eb,#60a5fa);
+  width:0;transition:width .3s ease
+}
+.meta{
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  font-weight:900;color:#334155
+}
+.option{
+  display:block;width:100%;text-align:left;margin:10px 0;padding:14px 16px;
+  background:#f8fafc;color:var(--ink);border:1px solid #cbd5e1;
+  border-radius:14px;font-size:17px;font-weight:800;line-height:1.6;cursor:pointer
+}
+.option:hover{background:#eef4ff}
+.option:disabled{cursor:default;opacity:1}
+.option.correct{background:#dcfce7;border-color:#16a34a;color:#166534}
+.option.wrong{background:#fee2e2;border-color:#dc2626;color:#991b1b}
+.feedback{text-align:center;font-size:18px;font-weight:900;min-height:30px;margin:14px 0}
+.ok{color:var(--green)}
+.bad{color:var(--red)}
+.score{
+  font-size:30px;font-weight:1000;text-align:center;color:#1d4ed8;
+  letter-spacing:1px;margin:16px 0
+}
+.hero{text-align:center;padding:32px 18px}
+.btn{
+  border:0;border-radius:14px;background:var(--blue);color:#fff;
+  font-weight:900;font-size:17px;padding:13px 18px;cursor:pointer
+}
+.btn.green{background:var(--green)}
+.result-title{font-size:clamp(28px,7vw,44px);margin:8px 0}
+.result-box{
+  background:#f8fafc;border:1px solid var(--line);border-radius:18px;
+  padding:18px;margin:18px 0
+}
+@media(max-width:600px){
+  .top{align-items:flex-start;flex-direction:column}
+  .card{padding:15px}
+  .option{font-size:16px;padding:13px 14px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="brand">臺北市立重慶國中｜1150825 新生訓練</div>
+    <div class="badge">處室認識關｜學務處</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card" id="quizCard">
+    <h1>認識學務處</h1>
+    <div class="notice">請依序完成 13 題挑戰，認識生教組、衛生組、體育組與訓育組的工作。答對至少 9 題即可過關。</div>
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="meta">
+      <span id="questionCount"></span>
+      <span id="scoreCount"></span>
+    </div>
+    <div id="quizBox"></div>
+  </section>
+  <div id="result"></div>
+</main>
+
+<script>
+const questions = [{"group": "生教組", "question": "當天若因故需要臨時請假，家長最晚應於幾點前通知導師？", "options": ["A. 7：20", "B. 7：40", "C. 8：00", "D. 第一節下課前"], "answer": 1}, {"group": "生教組", "question": "若 7：40 後才到校，應先完成哪一項程序？", "options": ["A. 直接回教室", "B. 到學務處找老師", "C. 到警衛室簽名", "D. 到健康中心報到"], "answer": 2}, {"group": "衛生組", "question": "學生在校受傷，需要申請學生平安保險時，應向哪個處室辦理？", "options": ["A. 教務處", "B. 總務處", "C. 輔導室", "D. 學務處"], "answer": 3}, {"group": "體育組", "question": "借用體育器材時，除了借用器材外，還需要完成什麼？", "options": ["A. 向導師報備即可", "B. 填寫器材借用表，並寫清楚借用數量", "C. 拍照留存", "D. 不需要任何登記"], "answer": 1}, {"group": "體育組", "question": "體育股長在體育課前，應先找誰確認需要借用的器材？", "options": ["A. 導師", "B. 衛生股長", "C. 體育老師", "D. 總務主任"], "answer": 2}, {"group": "體育組", "question": "借用體育器材時，一次最多可以幾位同學進入器材室？", "options": ["A. 1人", "B. 2人", "C. 3人", "D. 不限人數"], "answer": 2}, {"group": "生教組", "question": "每天到校時，哪一項是每位同學都應完成的事項？", "options": ["A. 到學務處報到", "B. 刷卡到校", "C. 向導師簽到", "D. 到圖書館登記"], "answer": 1}, {"group": "生教組", "question": "學生若要攜帶行動載具到校，下列何者正確？", "options": ["A. 只要家長同意即可", "B. 開學第一天申請即可，不用每學期申請", "C. 每學期需填寫申請表，經核准後才能攜帶到校", "D. 人人都可以自由攜帶"], "answer": 2}, {"group": "生教組", "question": "下列哪一項屬於本校規範中的「行動載具」？", "options": ["A. 手機", "B. 平板電腦", "C. 智慧手錶（穿戴式裝置）", "D. 以上皆是"], "answer": 3}, {"group": "訓育組", "question": "依本校規定，每位同學每學期至少需要完成幾小時的服務學習？", "options": ["A. 2小時", "B. 4小時", "C. 6小時", "D. 8小時"], "answer": 2}, {"group": "訓育組", "question": "小華想到校外機構進行服務學習，下列哪一個流程才是正確的？", "options": ["A. 先服務，再請家長簽名，最後到訓育組申請。", "B. 先到訓育組填寫申請單 → 核可後繳交家長同意書 → 攜帶服務學習表單至校外服務 → 服務完成後繳回核章表單。", "C. 家長同意即可直接到校外服務，最後再向訓育組補申請。", "D. 只要完成服務，不需要繳回任何證明。"], "answer": 1}, {"group": "訓育組", "question": "小美想到里長辦公室進行校外服務學習，服務結束後，哪一種核章方式才符合學校規定？", "options": ["A. 只要有里長個人職章即可。", "B. 只要有服務照片即可。", "C. 須配合區公所服務學習活動，並加蓋區公所或相關單位戳章，不能只有里長個人職章。", "D. 不需要任何核章，只要口頭證明即可。"], "answer": 2}, {"group": "訓育組", "question": "下列哪一項最符合服務學習的精神？", "options": ["A. 幫同學寫作業", "B. 只為了集滿時數才參加服務", "C. 主動關懷他人、服務社區並培養責任感", "D. 在家做家事即可直接折抵服務時數"], "answer": 2}];
+const passScore = 9;
+let index = 0;
+let score = 0;
+let answered = false;
+
+function renderQuestion(){
+  const item = questions[index];
+  answered = false;
+  document.getElementById('questionCount').textContent =
+    `第 ${index + 1} / ${questions.length} 題｜${item.group}`;
+  document.getElementById('scoreCount').textContent = `目前得分：${score}`;
+  document.getElementById('progressBar').style.width =
+    `${(index / questions.length) * 100}%`;
+
+  document.getElementById('quizBox').innerHTML = `
+    <h2>${item.question}</h2>
+    <div id="options">
+      ${item.options.map((opt, i) =>
+        `<button class="option" onclick="answerQuestion(${i}, this)">${opt}</button>`
+      ).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function answerQuestion(choice, button){
+  if(answered) return;
+  answered = true;
+
+  const item = questions[index];
+  const buttons = [...document.querySelectorAll('#options .option')];
+  buttons.forEach(btn => btn.disabled = true);
+
+  if(choice === item.answer){
+    score++;
+    button.classList.add('correct');
+    document.getElementById('feedback').innerHTML =
+      '<span class="ok">答對了！</span>';
+  } else {
+    button.classList.add('wrong');
+    buttons[item.answer].classList.add('correct');
+    document.getElementById('feedback').innerHTML =
+      '<span class="bad">答錯了，請記住正確答案。</span>';
+  }
+
+  document.getElementById('scoreCount').textContent = `目前得分：${score}`;
+
+  setTimeout(() => {
+    index++;
+    if(index < questions.length){
+      renderQuestion();
+    } else {
+      finishQuiz();
+    }
+  }, 1100);
+}
+
+function finishQuiz(){
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('quizCard').style.display = 'none';
+
+  const passed = score >= passScore;
+  document.getElementById('result').innerHTML = `
+    <section class="card hero">
+      <div class="result-title ${passed ? 'ok' : 'bad'}">
+        ${passed ? '🎉 恭喜過關！' : '再接再厲！'}
+      </div>
+      <div class="result-box">
+        <div class="score">${score} / ${questions.length}</div>
+        <p class="sub">
+          ${passed
+            ? `你已達到過關標準（答對至少 ${passScore} 題）。`
+            : `本關須答對至少 ${passScore} 題才能過關。`}
+        </p>
+      </div>
+      <button class="btn ${passed ? 'green' : ''}" onclick="restartQuiz()">
+        ${passed ? '再玩一次' : '重新挑戰'}
+      </button>
+    </section>
+  `;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function restartQuiz(){
+  index = 0;
+  score = 0;
+  answered = false;
+  document.getElementById('result').innerHTML = '';
+  document.getElementById('quizCard').style.display = 'block';
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
